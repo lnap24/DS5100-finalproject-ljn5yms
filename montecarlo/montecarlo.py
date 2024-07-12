@@ -138,16 +138,14 @@ class Game():
         elif self._nrolls != nrolls:
             raise ValueError(f"Incompatible number of rolls: {nrolls} provided, but {self._nrolls} expected")
         
-        spec_die = self.dice[die_number - 1]  # Access the specific die by index (adjusting for 1-based indexing)
+        spec_die = self.dice[die_number - 1]
         rolls = spec_die.roll(nrolls)
         
-        # Create a DataFrame to store the results in wide format
         roll_df = pd.DataFrame({
             'roll_number': range(1, nrolls + 1),
             f'die_{die_number}': rolls
         }).set_index('roll_number')
         
-        # Combine with existing _gamedf
         if self._gamedf.empty:
             self._gamedf = roll_df
         else:
@@ -213,7 +211,7 @@ class Analyzer():
             int: The count of jackpot rolls.
         """
         for index, row in self._gamedf.iterrows():
-            if len(set(row)) == 1:  # Check if all non-NaN values in the row are the same
+            if len(set(row)) == 1:  
                 self.jackpot_counter += 1
         return self.jackpot_counter
     
@@ -238,7 +236,6 @@ class Analyzer():
         Returns:
             DataFrame: A pandas DataFrame with the count of each combination of faces rolled.
         """
-        #computes distinct combinations of faces rolled
         combos = []
         for _, row in self.game._gamedf.iterrows():
             combo = tuple(sorted(row.dropna()))
@@ -255,7 +252,6 @@ class Analyzer():
         Returns:
             DataFrame: A pandas DataFrame with the count of each permutation of faces rolled.
         """
-        #computes distinct permutations of faces rolled
         perms = []
         for _, row in self.game._gamedf.iterrows():
             perm = tuple(row.dropna())
