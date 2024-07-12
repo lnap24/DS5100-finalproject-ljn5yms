@@ -101,7 +101,6 @@ fairfreq = fairanalyzer.jackpot()
 ```
 Creating the Analyzer class preps the created Game class for the methods of Analyzer to be called on it, like jackpot.
 
-8.     
 # API Description
     CLASSES
     builtins.object
